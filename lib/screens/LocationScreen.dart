@@ -15,26 +15,58 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/cloudy.jpeg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.8),
+              BlendMode.dstATop,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SafeArea(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.location_on),
-                Icon(Icons.location_city),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      size: 45,
+                    ),
+                    Icon(
+                      Icons.location_city,
+                      size: 45,
+                    ),
+                  ],
+                ),
+                Text(
+                  '9 ℃  🌩',
+                  style: TextStyle(
+                    fontSize: 55,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Text(
+                  'You\'ll need 🧣 and 🧤 in London!',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'NotoSerif',
+                  ),
+                ),
               ],
             ),
-            Text('9^ C'),
-            Text(
-              'You\'ll need a and b in c!',
-              textAlign: TextAlign.end,
-            ),
-          ],
+          ),
         ),
       ),
     );
