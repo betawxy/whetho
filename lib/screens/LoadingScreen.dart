@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:whetho/services/location.dart';
+import 'package:whetho/services/weather.dart';
 
 import 'LocationScreen.dart';
 
@@ -17,7 +17,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    startGettingLocation();
+    _getWeather();
   }
 
   @override
@@ -32,13 +32,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 
-  Future<void> startGettingLocation() async {
-    var loc = await Location.getCurrentLocation();
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LocationScreen(loc: loc),
-        ));
+  Future<void> _getWeather() async {
+    var weatherData = await Weather.getWeatherFromCurrentLocation();
+    if (weatherData != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LocationScreen(weatherData: weatherData),
+          ));
+    }
   }
 }

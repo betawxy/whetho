@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import '../services/location.dart';
+import 'package:whetho/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
   static const route = '/location';
 
-  const LocationScreen({Key? key, required this.loc}) : super(key: key);
-  final Location loc;
+  const LocationScreen({Key? key, required this.weatherData}) : super(key: key);
+  final Weather weatherData;
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -48,7 +47,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   ],
                 ),
                 Text(
-                  '9 ℃  🌩',
+                  '${widget.weatherData.temperature} ℃  🌩',
                   style: TextStyle(
                     fontSize: 55,
                     color: Colors.white,
