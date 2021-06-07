@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whetho/screens/CityScreen.dart';
 import 'package:whetho/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _LocationScreenState extends State<LocationScreen> {
             image: AssetImage('images/cloudy.jpeg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.8),
+              Colors.white.withOpacity(0.6),
               BlendMode.dstATop,
             ),
           ),
@@ -40,9 +41,14 @@ class _LocationScreenState extends State<LocationScreen> {
                       Icons.location_on,
                       size: 45,
                     ),
-                    Icon(
-                      Icons.location_city,
-                      size: 45,
+                    GestureDetector(
+                      child: Icon(
+                        Icons.location_city,
+                        size: 45,
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, CityScreen.route);
+                      },
                     ),
                   ],
                 ),
