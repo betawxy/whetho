@@ -9,8 +9,16 @@ const openWeatherMapURL = 'https://api.openweathermap.org/data/2.5/weather';
 
 class Weather {
   final int temperature;
+  final String name;
+  final String icon;
+  final String message;
 
-  Weather({required this.temperature});
+  Weather({
+    required this.temperature,
+    required this.name,
+    required this.icon,
+    required this.message,
+  });
 
   static Future<Weather?> getWeatherFromCurrentLocation() async {
     var loc = await Location.getCurrentLocation();
@@ -20,13 +28,52 @@ class Weather {
 
     if (data != null) {
       try {
-        return Weather(temperature: (data['main']['temp'] as double).toInt());
+        print(data);
+        var temp = (data['main']['temp'] as double).toInt();
+        return Weather(
+          temperature: temp,
+          name: data['name'],
+          icon: getWeatherIcon(data['weather'][0]['id']),
+          message: getMessage(temp),
+        );
       } catch (e) {
         return null;
       }
     }
 
     return null;
+  }
+}
+
+String getWeatherIcon(int condition) {
+  if (condition < 300) {
+    return '🌩';
+  } else if (condition < 400) {
+    return '🌧';
+  } else if (condition < 600) {
+    return '☔️';
+  } else if (condition < 700) {
+    return '☃️';
+  } else if (condition < 800) {
+    return '🌫';
+  } else if (condition == 800) {
+    return '☀️';
+  } else if (condition <= 804) {
+    return '☁️';
+  } else {
+    return '🤷‍';
+  }
+}
+
+String getMessage(int temp) {
+  if (temp > 25) {
+    return 'It\'s 🍦 time';
+  } else if (temp > 20) {
+    return 'Time for shorts and 👕';
+  } else if (temp < 10) {
+    return 'You\'ll need 🧣 and 🧤';
+  } else {
+    return 'Bring a 🧥 just in case';
   }
 }
 

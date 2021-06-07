@@ -47,7 +47,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   ],
                 ),
                 Text(
-                  '${widget.weatherData.temperature} ℃  🌩',
+                  '${widget.weatherData.temperature} ℃  ' +
+                      '${widget.weatherData.icon}',
                   style: TextStyle(
                     fontSize: 55,
                     color: Colors.white,
@@ -55,7 +56,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ),
                 Text(
-                  'You\'ll need 🧣 and 🧤 in London!',
+                  '${widget.weatherData.message} in ${widget.weatherData.name}!',
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     fontSize: 42,
