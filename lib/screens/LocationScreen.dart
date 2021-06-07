@@ -13,6 +13,8 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  Weather? localWeatherData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,24 +39,42 @@ class _LocationScreenState extends State<LocationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.location_on,
-                      size: 45,
+                    GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.location_on,
+                          size: 45,
+                        ),
+                      ),
+                      onTap: () async {
+                        await Feedback.forTap(context);
+                        var w = await Weather.getWeatherFromCurrentLocation();
+                        if (w != null) {
+                          setState(() {
+                            localWeatherData = w;
+                          });
+                        }
+                      },
                     ),
                     GestureDetector(
-                      child: Icon(
-                        Icons.location_city,
-                        size: 45,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.location_city,
+                          size: 45,
+                        ),
                       ),
-                      onTap: () {
+                      onTap: () async {
+                        await Feedback.forTap(context);
                         Navigator.pushNamed(context, CityScreen.route);
                       },
                     ),
                   ],
                 ),
                 Text(
-                  '${widget.weatherData.temperature} ℃  ' +
-                      '${widget.weatherData.icon}',
+                  '${(localWeatherData ?? widget.weatherData).temperature}' +
+                      ' ℃  ${(localWeatherData ?? widget.weatherData).icon}',
                   style: TextStyle(
                     fontSize: 55,
                     color: Colors.white,
@@ -62,7 +82,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ),
                 Text(
-                  '${widget.weatherData.message} in ${widget.weatherData.name}!',
+                  '${(localWeatherData ?? widget.weatherData).message}' +
+                      ' in ${(localWeatherData ?? widget.weatherData).name}!',
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     fontSize: 42,
