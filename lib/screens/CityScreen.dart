@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:whetho/services/weather.dart';
+
+import 'LocationScreen.dart';
 
 class CityScreen extends StatefulWidget {
   static const route = '/city';
@@ -10,6 +13,8 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  String? name;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +60,29 @@ class _CityScreenState extends State<CityScreen> {
                     style: TextStyle(
                       fontSize: 25,
                     ),
+                    onChanged: (v) {
+                      setState(() {
+                        name = v;
+                      });
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (name != null) {
+                      var weatherData = await Weather.getWeatherOfCity(name!);
+                      if (weatherData != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                LocationScreen(weatherData: weatherData),
+                          ),
+                        );
+                      }
+                    }
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(

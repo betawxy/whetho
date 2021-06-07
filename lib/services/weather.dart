@@ -26,6 +26,10 @@ class Weather {
         '&appid=$apiKey&units=metric';
     var data = await getData(url);
 
+    return _extractData(data);
+  }
+
+  static Weather? _extractData(data) {
     if (data != null) {
       try {
         print(data);
@@ -42,6 +46,12 @@ class Weather {
     }
 
     return null;
+  }
+
+  static Future<Weather?> getWeatherOfCity(String name) async {
+    var url = '$openWeatherMapURL?q=$name&appid=$apiKey&units=metric';
+    var data = await getData(url);
+    return _extractData(data);
   }
 }
 
